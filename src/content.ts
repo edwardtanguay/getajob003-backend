@@ -4,11 +4,6 @@ import axios from 'axios';
 const message = 'Welcome to this info site.';
 const messageIdCode = camelCase(message);
 
-type Noun = {
-	article: string,
-	singular: string,
-	plural: string
-}
 
 const url = 'https://edwardtanguay.vercel.app/share/germanNouns.json';
 const options = {
