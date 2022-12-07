@@ -3,7 +3,7 @@ import * as model from './model.js';
 import { Job, Skill, nullObjectSkill } from './types.js';
 
 
-const jobs: Job[] = JSON.parse(fs.readFileSync('./src/data/jobs.json', 'utf8'));
+const _jobs: Job[] = JSON.parse(fs.readFileSync('./src/data/jobs.json', 'utf8'));
 const skillInfos: any = JSON.parse(fs.readFileSync('./src/data/skillInfos.json', 'utf8'));
 
 export const getApiInstructionsHtml = () => {
@@ -18,17 +18,25 @@ a, h1 {
 <ul>
 	<li><a href="jobs">/jobs</a> - array of job listings will all fields</li>
 	<li><a href="todos">/todos</a> - array of todos with todo/company/title fields</li>
-	<li><a href="skills">/skills</a> - array of skills with all fields</li>
+	<li><a href="totaledSkills">/totaledSkills</a> - array of skills with totals how often they occur in job listings</li>
 </ul>
 	`;
 }
 
 export const getJobs = () => {
+	const jobs: Job[] = [];
+	_jobs.forEach(_job => {
+		const job = {
+			..._job,
+			skills: model.getSkillsWithList(_job.skillList) 
+		}
+		jobs.push(job);
+	})
 	return jobs;
 }
 
 export const getTodos = () => {
-	return jobs.map((job: Job) => {
+	return _jobs.map((job: Job) => {
 		return {
 			todo: job.todo,
 			company: job.company,
@@ -37,14 +45,16 @@ export const getTodos = () => {
 	});
 }
 
-export const getSkills = () => {
+export const getTotaledSkills = () => {
+	return [];
+}
+
+export const getSkillsWithList = (skillList: string) => {
 	const skills: Skill[] = [];
-	jobs.forEach(job => {
-		const skillIdCodes = job.skillList.split(',').map(m => m.trim());
-		skillIdCodes.forEach(skillIdCode => {
-			const skill: Skill = model.lookupSkill(skillIdCode);
-			skills.push(skill);
-		})
+	const skillIdCodes = skillList.split(',').map(m => m.trim());
+	skillIdCodes.forEach(skillIdCode => {
+		const skill: Skill = model.lookupSkill(skillIdCode);
+		skills.push(skill);
 	});
 	return skills;
 }

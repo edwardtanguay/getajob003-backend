@@ -5,6 +5,7 @@ export type Job = {
 	url: string;
 	description: string;
 	skillList: string;
+	skills: Skill[];
 	todo: string;
 }
 
