@@ -13,5 +13,15 @@
 		"name": "React",
 		"url": "https://onespace.pages.dev/techItems?id=2",
 		"description": "currently the most popular front-end JavaScript framework along with Vue and Angular"
+	},
+	"jest": {
+		"name": "Jest",
+		"url": "https://onespace.pages.dev/techItems?id=19",
+		"description": "a JavaScript testing framework like Mocha, but simpler"
+	},
+	"swagger": {
+		"name": "Swagger",
+		"url": "https://en.wikipedia.org/wiki/Swagger_(software)",
+		"description": "a suite of tools for API developers created in 2011"
 	}
 }
