@@ -16,6 +16,17 @@ export type Skill = {
 	description: string;
 }
 
+export type Todo = {
+	todoText: string;
+	company: string;
+	title: string;
+}
+
+export type TotaledSkill = {
+	skill: Skill;
+	total: number;
+}
+
 export const nullObjectSkill: Skill = {
 	idCode: '',
 	name: '',

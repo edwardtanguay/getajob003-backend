@@ -1,7 +1,6 @@
 import fs from 'fs';
 import * as model from './model.js';
-import { Job, Skill, nullObjectSkill } from './types.js';
-
+import { Job, Skill, nullObjectSkill, TotaledSkill, Todo } from './types.js';
 
 const _jobs: Job[] = JSON.parse(fs.readFileSync('./src/data/jobs.json', 'utf8'));
 const skillInfos: any = JSON.parse(fs.readFileSync('./src/data/skillInfos.json', 'utf8'));
@@ -23,22 +22,22 @@ a, h1 {
 	`;
 }
 
-export const getJobs = () => {
+export const getJobs = (): Job[] => {
 	const jobs: Job[] = [];
 	_jobs.forEach(_job => {
 		const job = {
 			..._job,
-			skills: model.getSkillsWithList(_job.skillList) 
+			skills: model.getSkillsWithList(_job.skillList)
 		}
 		jobs.push(job);
 	})
 	return jobs;
 }
 
-export const getTodos = () => {
+export const getTodos = (): Todo[] => {
 	return _jobs.map((job: Job) => {
 		return {
-			todo: job.todo,
+			todoText: job.todo,
 			company: job.company,
 			title: job.title
 		}
@@ -46,7 +45,21 @@ export const getTodos = () => {
 }
 
 export const getTotaledSkills = () => {
-	return [];
+	const totaledSkills: TotaledSkill[] = [];
+	model.getJobs().forEach(job => {
+		job.skills.forEach(skill => {
+			const existingTotaledSkill = totaledSkills.find(totaledSkill => totaledSkill.skill.idCode === skill.idCode);
+			if (!existingTotaledSkill) {
+				totaledSkills.push({
+					skill,
+					total: 1
+				});
+			} else {
+				existingTotaledSkill.total++;
+			}
+		});
+	})
+	return totaledSkills;
 }
 
 export const getSkillsWithList = (skillList: string) => {
