@@ -20,6 +20,7 @@ export type Todo = {
 	todoText: string;
 	company: string;
 	title: string;
+	url: string;
 }
 
 export type TotaledSkill = {

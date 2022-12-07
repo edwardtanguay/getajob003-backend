@@ -39,7 +39,8 @@ export const getTodos = (): Todo[] => {
 		return {
 			todoText: job.todo,
 			company: job.company,
-			title: job.title
+			title: job.title,
+			url: job.url
 		}
 	});
 }
